@@ -5,8 +5,8 @@ namespace ContactWebEFCore6.Data
     public class UserRoleService : IUserRolesService
     {
         public const string ADMIN_ROLE_NAME = "Admin";
-        private const string ADMIN_USER_EMAIL = "tim@tim.com";
-        private const string ADMIN_USER_PWD = "Asdf1234";
+        private const string ADMIN_USER_EMAIL = "jorge@leon.com";
+        private const string ADMIN_USER_PWD = "Cacere$4";
         private readonly UserManager<IdentityUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
 
