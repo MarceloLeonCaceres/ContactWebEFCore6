@@ -11,7 +11,7 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-<table class="table">
+<table id="contacts_table" class="table">
     <thead>
         <tr>
             <th>
@@ -96,3 +96,10 @@
 }
     </tbody>
 </table>
+
+@section Scripts
+{
+    <script type="text/javascript">
+        $("#contacts_table").DataTable();
+    </script>
+}
