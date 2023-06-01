@@ -220,16 +220,16 @@ namespace MyContactManagerIntegrationTests
                     Zip = "99999"
                 };
 
-                await _repository.AddOrUpdateAsync(contactToAdd, USERID3);
+                await _repository.AddOrUpdateAsync(contactToAdd, USERID2);
 
-                var updatedContact = await _repository.GetAsync(contactToAdd.Id, USERID3);
+                var updatedContact = await _repository.GetAsync(contactToAdd.Id, USERID2);
                 updatedContact.ShouldNotBeNull();
                 updatedContact.FirstName.ShouldBe("Jean-Luc", StringCompareShould.IgnoreCase);
                 updatedContact.Email.ShouldBe("jlpicard@starfleet.com", StringCompareShould.IgnoreCase);
 
                 //delete to keep current count and list in tact.
-                await _repository.DeleteAsync(updatedContact.Id, USERID3);
-                var deletedContact = await _repository.GetAsync(updatedContact.Id, USERID3);
+                await _repository.DeleteAsync(updatedContact.Id, USERID2);
+                var deletedContact = await _repository.GetAsync(updatedContact.Id, USERID2);
                 deletedContact.ShouldBeNull();
             }
         }

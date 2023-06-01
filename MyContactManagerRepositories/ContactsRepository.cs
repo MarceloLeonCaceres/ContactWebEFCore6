@@ -24,7 +24,8 @@ namespace MyContactManagerRepositories
 
         public async Task<Contact?> GetAsync(int id, string userId)
         {
-            var result = await _context.Contacts.AsNoTracking()
+            var result = await _context.Contacts.Include(x => x.State)
+                                    .AsNoTracking()
                                     .SingleOrDefaultAsync(x => x.Id == id && x.UserId == userId);
             return result;
         }

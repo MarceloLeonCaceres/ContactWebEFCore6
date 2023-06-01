@@ -6,9 +6,11 @@ using ContactWebEFCore6.Models;
 using Microsoft.Extensions.Caching.Memory;
 using MyContactManagerServices;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ContactWebEFCore6.Controllers
 {
+    [Authorize]
     public class ContactsController : Controller
     {
         private readonly IContactsService _contactsService;
@@ -58,6 +60,7 @@ namespace ContactWebEFCore6.Controllers
         {
             var userId = await GetCurrentUserId();
             var contacts = await _contactsService.GetAllAsync(userId);
+            ViewData["customValue"] = "Paso de parametros a la vista desde el controller";
             return View(contacts);
         }
 
@@ -93,10 +96,11 @@ namespace ContactWebEFCore6.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,FirstName,LastName,Email,PhonePrimary,PhoneSecondary,Birthday,StreetAddress1,StreetAddress2,City,StateId,Zip,UserId")] Contact contact)
         {
+            var userId = await GetCurrentUserId();
+            contact.UserId = userId;
             await UpdateStateAndResetModelState(contact);
             if (ModelState.IsValid)
             {
-                var userId = await GetCurrentUserId();
                 await _contactsService.AddOrUpdateAsync(contact, userId);
                 return RedirectToAction(nameof(Index));
             }
@@ -134,12 +138,13 @@ namespace ContactWebEFCore6.Controllers
                 return NotFound();
             }
 
+            var userId = await GetCurrentUserId();
+            contact.UserId = userId;
             await UpdateStateAndResetModelState(contact);
             if (ModelState.IsValid)
             {
                 try
                 {
-                    var userId = await GetCurrentUserId();
                     await _contactsService.AddOrUpdateAsync(contact, userId);
                 }
                 catch (DbUpdateConcurrencyException)
