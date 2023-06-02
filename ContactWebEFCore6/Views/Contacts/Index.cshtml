@@ -88,18 +88,116 @@
                 @Html.HiddenFor(modelItem => item.UserId)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                <a class="btn btn-primary btn-sm button-default-sm-width" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                <a class="btn btn-outline-secondary btn-sm button-default-sm-width" href="#" data-bs-toggle="modal" data-bs-target="#contactDetailsModal" 
+                    data-bs-friendlyname="@item.FriendlyName" data-bs-firstName="@item.FirstName" data-bs-lastname="@item.LastName"
+                    data-bs-email="@item.Email" data-bs-phone1="@item.PhonePrimary" data-bs-phone2="@item.PhoneSecondary"
+                    data-bs-birthday="@item.Birthday" data-bs-friendlyAddress="@item.FriendlyAddress">Details</a>
+                <form asp-action="Delete" asp-route-id="@item.Id" method="post">
+                    <button type="submit" class="btn btn-danger btn-sm button-default-sm-width"
+                        onclick="return confirm('Confirma que quiere borrar el contacto @item.FriendlyName?');">Delete</button>
+                </form>
             </td>
         </tr>
 }
     </tbody>
 </table>
 
+<div class="modal fade" id="contactDetailsModal" tabindex="-1" aria-labelledby="contactDetailsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="contactDetailsModalLabel">Contact Name</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <dl class="row">
+                    <dt class = "col-sm-4">
+                        First Name
+                    </dt>
+                    <dd class = "col-sm-8">
+                        <span class="modal-first-name"></span>
+                    </dd>
+                    <dt class = "col-sm-4">
+                        Last Name
+                    </dt>
+                    <dd class = "col-sm-8">
+                        <span class="modal-last-name"></span>
+                    </dd>
+                    <dt class = "col-sm-4">
+                        Email
+                    </dt>
+                    <dd class = "col-sm-8">
+                        <span class="modal-email-address"></span>
+                    </dd>
+                    <dt class = "col-sm-4">
+                        Primary Phone
+                    </dt>
+                    <dd class = "col-sm-8">
+                        <span class="modal-primary-phone"></span>
+                    </dd>
+                    <dt class = "col-sm-4">
+                        Secondary Phone
+                    </dt>
+                    <dd class = "col-sm-8">
+                        <span class="modal-secondary-phone"></span>
+                    </dd>
+                    <dt class = "col-sm-4">
+                        Birthday
+                    </dt>
+                    <dd class = "col-sm-8">
+                        <span class="modal-birthday"></span>
+                    </dd>
+                    <dt class = "col-sm-4">
+                        Street Address
+                    </dt>
+                    <dd class = "col-sm-8">
+                        <span class="modal-street-address"></span>
+                    </dd>
+                </dl>
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 @section Scripts
 {
     <script type="text/javascript">
         $("#contacts_table").DataTable();
+
+        var contactDetailsModal = document.getElementById('contactDetailsModal')
+        contactDetailsModal.addEventListener('show.bs.modal', function (event) {
+            
+            var button = event.relatedTarget
+            
+            var title = button.getAttribute('data-bs-friendlyName');
+            var firstName = button.getAttribute('data-bs-firstName');
+            var lastName = button.getAttribute('data-bs-lastName');
+            var email = button.getAttribute('data-bs-email');
+            var phone1 = button.getAttribute('data-bs-phone1');
+            var phone2 = button.getAttribute('data-bs-phone2');
+            var birthday = button.getAttribute('data-bs-birthday');
+            var address = button.getAttribute('data-bs-friendlyAddress');
+            
+            var modalTitle = contactDetailsModal.querySelector('.modal-title');
+            modalTitle.textContent = title;
+            var modalFirstName = contactDetailsModal.querySelector('.modal-first-name');
+            modalFirstName.textContent = firstName;
+            var modalLastName = contactDetailsModal.querySelector('.modal-last-name');
+            modalLastName.textContent = lastName;
+            var modalEmail = contactDetailsModal.querySelector('.modal-email-address');
+            modalEmail.textContent = email;
+            var modalPhone1 = contactDetailsModal.querySelector('.modal-primary-phone');
+            modalPhone1.textContent = phone1;
+            var modalPhone2 = contactDetailsModal.querySelector('.modal-secondary-phone');
+            modalPhone2.textContent = title;
+            var modalBirthday = contactDetailsModal.querySelector('.modal-birthday');
+            modalBirthday.textContent = birthday;
+            var modalAddress = contactDetailsModal.querySelector('.modal-street-address');
+            modalAddress.textContent = address;
+        })
     </script>
 }
