@@ -21,3 +21,13 @@ body {
     font-weight: bold;
     background-color:orange
 }
+.button-default-width {
+    width: 225px;
+}
+
+.padding-top-25 {
+    padding-top: 25px;
+}
+.button-default-sm-width {
+    width: 75px;
+}
