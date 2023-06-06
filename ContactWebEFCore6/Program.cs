@@ -21,19 +21,19 @@ var azureIdentityDbConnString = builder.Configuration.GetConnectionString("Azuer
 var contextOptions = new DbContextOptionsBuilder<ApplicationDbContext>()
     .UseSqlServer(azureIdentityDbConnString)
     .Options;
-using (var context = new ApplicationDbContext(contextOptions))
-{
-    context.Database.Migrate();
-}
+//using (var context = new ApplicationDbContext(contextOptions))
+//{
+//    context.Database.Migrate();
+//}
 
 var azureContactDbConnString = builder.Configuration.GetConnectionString("AzureContactDb");
 var contextOptions2 = new DbContextOptionsBuilder<MyContactManagerDbContext>()
     .UseSqlServer(azureContactDbConnString)
     .Options;
-using (var context = new MyContactManagerDbContext(contextOptions2))
-{
-    context.Database.Migrate();
-}
+//using (var context = new MyContactManagerDbContext(contextOptions2))
+//{
+//    context.Database.Migrate();
+//}
 //
 
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
