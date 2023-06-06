@@ -17,16 +17,18 @@ builder.Services.AddDbContext<MyContactManagerDbContext>(options =>
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 // For use in the Azure environment
+var azureIdentityDbConnString = builder.Configuration.GetConnectionString("AzuerIdentityDb");
 var contextOptions = new DbContextOptionsBuilder<ApplicationDbContext>()
-    .UseSqlServer(connectionString)
+    .UseSqlServer(azureIdentityDbConnString)
     .Options;
 using (var context = new ApplicationDbContext(contextOptions))
 {
     context.Database.Migrate();
 }
 
+var azureContactDbConnString = builder.Configuration.GetConnectionString("AzureContactDb");
 var contextOptions2 = new DbContextOptionsBuilder<MyContactManagerDbContext>()
-    .UseSqlServer(mcmdContext)
+    .UseSqlServer(azureContactDbConnString)
     .Options;
 using (var context = new MyContactManagerDbContext(contextOptions2))
 {
