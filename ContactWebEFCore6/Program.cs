@@ -13,7 +13,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 var mcmdContext = builder.Configuration.GetConnectionString("MyContactManager");
 builder.Services.AddDbContext<MyContactManagerDbContext>(options =>
-    options.UseSqlServer(connectionString));
+    options.UseSqlServer(mcmdContext));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 // For use in the Azure environment
@@ -21,19 +21,19 @@ var azureIdentityDbConnString = builder.Configuration.GetConnectionString("Azuer
 var contextOptions = new DbContextOptionsBuilder<ApplicationDbContext>()
     .UseSqlServer(azureIdentityDbConnString)
     .Options;
-//using (var context = new ApplicationDbContext(contextOptions))
-//{
-//    context.Database.Migrate();
-//}
+using (var context = new ApplicationDbContext(contextOptions))
+{
+    context.Database.Migrate();
+}
 
 var azureContactDbConnString = builder.Configuration.GetConnectionString("AzureContactDb");
 var contextOptions2 = new DbContextOptionsBuilder<MyContactManagerDbContext>()
     .UseSqlServer(azureContactDbConnString)
     .Options;
-//using (var context = new MyContactManagerDbContext(contextOptions2))
-//{
-//    context.Database.Migrate();
-//}
+using (var context = new MyContactManagerDbContext(contextOptions2))
+{
+    context.Database.Migrate();
+}
 //
 
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
