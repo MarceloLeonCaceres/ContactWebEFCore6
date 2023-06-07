@@ -28,21 +28,21 @@ builder.Services.AddDbContext<MyContactManagerDbContext>(options =>
 // --------  For use in the Azure environment  -------------------
 
 // --------  For use in the Azure environment  -------------------
-//var contextOptions = new DbContextOptionsBuilder<ApplicationDbContext>()
-//    .UseSqlServer(azureIdentityDbConnString)
-//    .Options;
-//using (var context = new ApplicationDbContext(contextOptions))
-//{
-//    context.Database.Migrate();
-//}
+var contextOptions = new DbContextOptionsBuilder<ApplicationDbContext>()
+    .UseSqlServer(azureIdentityDbConnString)
+    .Options;
+using (var context = new ApplicationDbContext(contextOptions))
+{
+    context.Database.Migrate();
+}
 
-//var contextOptions2 = new DbContextOptionsBuilder<MyContactManagerDbContext>()
-//    .UseSqlServer(azureContactDbConnString)
-//    .Options;
-//using (var context = new MyContactManagerDbContext(contextOptions2))
-//{
-//    context.Database.Migrate();
-//}
+var contextOptions2 = new DbContextOptionsBuilder<MyContactManagerDbContext>()
+    .UseSqlServer(azureContactDbConnString)
+    .Options;
+using (var context = new MyContactManagerDbContext(contextOptions2))
+{
+    context.Database.Migrate();
+}
 // --------  End using the Azure environment  -------------------
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
