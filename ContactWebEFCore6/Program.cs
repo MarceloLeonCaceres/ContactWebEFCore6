@@ -14,17 +14,17 @@ var azureIdentityDbConnString = builder.Configuration.GetConnectionString("Azure
 var azureContactDbConnString = builder.Configuration.GetConnectionString("AzureContactDb");
 
 // --------  For use in this computer  -------------------
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(connectionString));
-builder.Services.AddDbContext<MyContactManagerDbContext>(options =>
-    options.UseSqlServer(mcmdContext));
+//builder.Services.AddDbContext<ApplicationDbContext>(options =>
+//    options.UseSqlServer(connectionString));
+//builder.Services.AddDbContext<MyContactManagerDbContext>(options =>
+//    options.UseSqlServer(mcmdContext));
 // --------  End using in this computer  -------------------
 
 //// --------  End using the Azure environment  -------------------
-//builder.Services.AddDbContext<ApplicationDbContext>(options =>
-//    options.UseSqlServer(azureIdentityDbConnString));
-//builder.Services.AddDbContext<MyContactManagerDbContext>(options =>
-//    options.UseSqlServer(azureContactDbConnString));
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    options.UseSqlServer(azureIdentityDbConnString));
+builder.Services.AddDbContext<MyContactManagerDbContext>(options =>
+    options.UseSqlServer(azureContactDbConnString));
 // --------  For use in the Azure environment  -------------------
 
 // --------  For use in the Azure environment  -------------------
